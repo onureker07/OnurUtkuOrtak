@@ -8,7 +8,7 @@ class BFS:
         self.queue.append(root)
 
     def run(self, target):
-       depth = 0
+        depth = 0
         r = self.queue.pop()
         if r.is_equal(target):
             return True,self.counter,depth
