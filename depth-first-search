@@ -7,10 +7,16 @@ class DFS:
         self.counter = 0
 
     def run(self, target):
-        """ YOUR CODE HERE """
+    
+           while self.stack:
+            current_node = self.stack.pop()
 
-        # return 3 items
-        # a: bool (match found or not)
-        # b: int (counter)
-        # c: int (depth)
-        return False, 0, 0
+            if current_node.UID not in self.visited:
+                self.counter += 1
+                if current_node.is_equal(target):
+                    return True, self.counter, current_node.step
+                for child in self.graph.reveal_neighbors(current_node):
+                    self.stack.append(child)
+                self.visited[current_node.UID] = current_node
+
+        return False
