@@ -8,7 +8,13 @@ class BFS:
         self.queue.append(root)
 
     def run(self, target):
-        depth = 0
+       depth = 0
+        r = self.queue.pop()
+        if r.is_equal(target):
+            return True,self.counter,depth
+
+        self.queue.append(r)
+
         while self.queue:
             current_node = self.queue.pop()
             for n in self.graph.reveal_neighbors(current_node):
@@ -23,9 +29,5 @@ class BFS:
         
         
         
+     
         
-        # return 3 items
-        # a: bool (match found or not)
-        # b: int (counter)
-        # c: int (depth)
-        return False, 0, 0
