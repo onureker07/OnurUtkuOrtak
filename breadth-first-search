@@ -8,6 +8,18 @@ class BFS:
         self.queue.append(root)
 
     def run(self, target):
+        depth = 0
+        while self.queue:
+            current_node = self.queue.pop()
+            for n in self.graph.reveal_neighbors(current_node):
+                if n.UID not in self.visited:
+                    self.counter += 1
+                    if n.is_equal(target):
+                        return True, self.counter, depth
+                    self.queue.append(n)
+                    self.visited[n.UID] = n
+            depth += 1
+        return False, self.counter, depth
         
         
         
