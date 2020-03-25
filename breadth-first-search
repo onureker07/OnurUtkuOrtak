@@ -16,6 +16,7 @@ class BFS:
         self.queue.append(r)
 
         while self.queue:
+            depth = 1
             current_node = self.queue.pop()
             for n in self.graph.reveal_neighbors(current_node):
                 if n.UID not in self.visited:
