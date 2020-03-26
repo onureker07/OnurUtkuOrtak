@@ -12,20 +12,22 @@ class BFS:
         r = self.queue.pop()
         if r.is_equal(target):
             return True, self.counter, r.step
+        self.counter += 1
         self.queue.append(r)
 
         while self.queue:
             current_node = self.queue.pop(0)
+
             for n in self.graph.reveal_neighbors(current_node):
                 if n.UID not in self.visited:
+                    self.counter += 1
                     if n.is_equal(target):
                         return True, self.counter, n.step
                     self.queue.append(n)
                     self.visited[n.UID] = n
-                    self.counter += 1
 
         return False
-        
+
         
         
      
