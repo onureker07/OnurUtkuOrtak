@@ -8,13 +8,14 @@ class DFS:
 
     def run(self, target):
     
-           while self.stack:
+        while self.stack:
             current_node = self.stack.pop()
 
             if current_node.UID not in self.visited:
                 self.counter += 1
                 if current_node.is_equal(target):
                     return True, self.counter, current_node.step
+                
                 for child in self.graph.reveal_neighbors(current_node):
                     self.stack.append(child)
                 self.visited[current_node.UID] = current_node
