@@ -10,22 +10,19 @@ class AStar:
         self.counter = 0
 
     def run(self, target):
-        self.queue.put((self.root.step, self.root, int(self.root.UID)))
-        r = self.queue.get()[1]
-        if r.is_equal(target):
-            return True, self.counter, r.step
-        self.counter += 1
-        self.queue.put((self.root.step, self.root, int(self.root.UID)))
+       self.queue.put((self.root.step, self.root, int(self.root.UID)))
+
 
         while self.queue:
+
             current_node = self.queue.get()[1]
+            self.counter += 1
+            if current_node.is_equal(target):
+                return True, self.counter, current_node.step
+            self.visited[current_node.UID] = current_node
 
             for n in self.graph.reveal_neighbors(current_node):
                 if n.UID not in self.visited:
-                    self.counter += 1
-                    if n.is_equal(target):
-                        return True, self.counter, n.step
-                    self.visited[n.UID] = n
                     dist = n.step + self.manhattan_distance(n, target)
                     self.queue.put((dist, n, int(n.UID)))
 
