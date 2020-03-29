@@ -10,13 +10,15 @@ class BFS:
     def run(self, target):
         
         r = self.queue.pop()
+        self.counter += 1
         if r.is_equal(target):
             return True, self.counter, r.step
-        self.counter += 1
+
         self.queue.append(r)
 
         while self.queue:
             current_node = self.queue.pop(0)
+            self.visited[current_node.UID] = current_node
 
             for n in self.graph.reveal_neighbors(current_node):
                 if n.UID not in self.visited:
@@ -24,7 +26,6 @@ class BFS:
                     if n.is_equal(target):
                         return True, self.counter, n.step
                     self.queue.append(n)
-                    self.visited[n.UID] = n
 
         return False
 
