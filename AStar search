@@ -10,13 +10,26 @@ class AStar:
         self.counter = 0
 
     def run(self, target):
-        """ YOUR CODE HERE """
+        self.queue.put((self.root.step, self.root, int(self.root.UID)))
+        r = self.queue.get()[1]
+        if r.is_equal(target):
+            return True, self.counter, r.step
+        self.counter += 1
+        self.queue.put((self.root.step, self.root, int(self.root.UID)))
 
-        # return 3 items
-        # a: bool (match found or not)
-        # b: int (counter)
-        # c: int (depth)
-        return False, 0, 0
+        while self.queue:
+            current_node = self.queue.get()[1]
+
+            for n in self.graph.reveal_neighbors(current_node):
+                if n.UID not in self.visited:
+                    self.counter += 1
+                    if n.is_equal(target):
+                        return True, self.counter, n.step
+                    self.visited[n.UID] = n
+                    dist = n.step + self.manhattan_distance(n, target)
+                    self.queue.put((dist, n, int(n.UID)))
+
+        return False
 
     def manhattan_distance(self, node, end):
         arr = [0] * (self.graph.size + 1)
